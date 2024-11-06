@@ -124,6 +124,16 @@ const getCidades = function(ufEstados){
     
 }
 
+module.exports = {
+    getCidades,
+    getCapitalPais,
+    getEstadoRegiao,
+    getCapitalEstados,
+    getDadosEstados,
+    getListaDeEstados
+}
+
+
 //getCidades('ba')
 //getCapitalPais()
 //getCapitalEstados('ba')
