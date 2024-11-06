@@ -35,11 +35,11 @@ app.use((request, response, next)=>{
     next()
 })
 
+//importe do arquivo de funções
+const estadosCidades = require('./modulo/funcoes.js')
+
 //EndPoint para retornar todos os estados (nome que a API será chamada)
 app.get('/v1/estados-cidades/lista-estados-sigla', cors(), async function(resquest, response){
-
-    //importe do arquivo de funções
-    let estadosCidades = require('./modulo/funcoes.js')
 
     //chama a função que retorna todos os estados
     let dados = estadosCidades.getListaDeEstados()
@@ -49,7 +49,43 @@ app.get('/v1/estados-cidades/lista-estados-sigla', cors(), async function(resque
     response.json(dados)
 })
 
+//EndPoint que retorna os dados de um estado filtrando pela sigla
+app.get('/v1/estados-cidades/estado/:sigla', cors(), async function(request, response){
+    
+    //Recebe o conteudo da variavel sigla que será enviada na URL da Requisição
+    let uf = request.params.sigla
+    
+    //Chama a função que ira receber a sigla e retornar os dados referente o estado
+    let dados = estadosCidades.getDadosEstados(uf)
+
+    if(dados){
+        response.status(200)
+        response.json(dados)
+    }else{
+        response.status(404)
+        response.json({'Status': 404, 'message': 'Não foi emcontrado um estado'})
+    }
+    
+    
+})
+
+app.get('/v1/estados-cidade/estado/:uf', cors(),async function(request, response){
+
+    let capital = request.params.uf
+    let dados = estadosCidades.getCapitalEstados(capital)
+    
+    if(dados){
+        response.status(200)
+        response.json(dados)
+    }else{
+        response.status(404)
+        response.json({'Status': 404, 'message': 'Não foi emcontrado um estado'})
+    }
+    
+})
+
 //Executa a API, e faz com que fique aguardando novas requisições
 app.listen('8080', function(){
-    console.log('API funcionando e aguradando requisições')
+    console.log('API funcionando e aguradando requisições..')
 })
+

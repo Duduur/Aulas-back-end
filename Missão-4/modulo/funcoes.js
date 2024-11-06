@@ -12,30 +12,44 @@ const getListaDeEstados = function(){
     let siglas = []
     let cidadeEstado = {}
     let listauf = listaDeEstados
+    let status = false
 
     listauf.listaDeEstados.estados.forEach(function(item){
+        status =  true
         siglas.push(item.sigla)
     })
     cidadeEstado.uf = siglas
     cidadeEstado.quantidade = siglas.length
 
-    console.log(cidadeEstado)
+    if(status == true){
+        return cidadeEstado
+    }else{
+        return status
+    }
+    
 }
 
 const getDadosEstados = function(ufsigla){
     let uf = String(ufsigla).toUpperCase()
     let cidadeEstado = {}
     let listauf = listaDeEstados.listaDeEstados.estados
+    let status = false
 
     listauf.forEach(function(item){
         if(String(item.sigla).toUpperCase() == uf){
+           status = true
             cidadeEstado.uf = item.sigla
             cidadeEstado.descricao = item.nome
             cidadeEstado.capital = item.capital
             cidadeEstado.regiao = item.regiao
         }
+       
     })
-    console.log(cidadeEstado)
+    if(status == true){
+        return cidadeEstado
+    }else{
+        return status
+    }
 
 }
 
@@ -43,15 +57,21 @@ const getCapitalEstados = function(ufcapital){
     let listaCapital = {}
     let capital = String(ufcapital).toUpperCase()
     let listauf = listaDeEstados.listaDeEstados.estados
+    let status = false
 
     listauf.forEach(function(item){
         if(String(item.sigla).toUpperCase() == capital){
+            status = true
             listaCapital.uf = item.sigla
             listaCapital.descricao = item.nome
             listaCapital.capital = item.capital
         }
     })
-    console.log(listaCapital)
+    if(status == true){
+        return listaCapital
+    }else{
+        return status
+    }
 }
 
 const getEstadoRegiao = function(regiaoFiltro){
@@ -72,7 +92,7 @@ const getEstadoRegiao = function(regiaoFiltro){
     brasilestados.regiao = regiao
     brasilestados.estado = estado
 
-    console.log(brasilestados)
+    return brasilestados
 
 }
 
@@ -97,7 +117,7 @@ const getCapitalPais = function(){
     })
     capitalUF.capitais = capitaiS
 
-    console.log(capitalUF)
+    return capitalUF
 }
 
 const getCidades = function(ufEstados){
